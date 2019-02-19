@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<style>
+
+	input[type="button"]:hover{
+		background-color:darkred;
+		cursor: pointer;
+	}
+
+	input[type="button"].noHover{
+		background-color: white;
+	}
+
+	form{
+
+		background-color:gray;
+	}
+
+	input[type="text"]{
+
+		background-color:white;
+		border:4px;
+		width:300px;
+		height: 30px;
+		font-size: 20px;
+		color: black;
+		text-align: center;
+		pointer-events: none;
+
+	}
+
+	input[name="cajaDeTexto1"]{
+
+		height: 20px;
+		font-size: 16px;
+	}
+
+	input[name="cajaDeTexto2"]{
+
+		margin-bottom: 6px;
+		font-size: 20px;
+	}
+
+	input[type="button"]{
+
+		font-size: 18px;
+		font-weight:lighter;
+		width:60px;border:0px;
+		height: 60px;
+		color: black;
+		background-color:white;
+		margin-bottom: 3px;
+        }
+
+	body{
+
+		background-color:grey;
+	}
+
+</style>
+
+</head>
+
+<body>
+
+<center>
+
+
+<form name="f1"><br>
+
+<input type="text" name="cajaDeTexto1">
+
+<br>
+
+<input type="text" name="cajaDeTexto2" value="0">
+
+<br>
+
+<br>
+
+<input type="button" onClick="document.f1.cajaDeTexto2.value='0'" value="CE">
+
+<input type="button" onClick="document.f1.reset(); borrarBloque = false;" value="C">
+
+<input type="button" class="noHover" value=" "> 
+
+<input type="button" onClick="operador('/')" value="÷">
+
+<br>
+
+<input type="button" onclick="escribir(this.value)" value="7">
+
+<input type="button" onclick="escribir(this.value)" value="8">
+
+<input type="button" onclick="escribir(this.value)" value="9">
+
+<input type="button" onClick="operador('*')" value="×">
+
+<br>
+
+<input type="button" onclick="escribir(this.value)" value="4">
+
+<input type="button" onclick="escribir(this.value)" value="5">
+
+<input type="button" onclick="escribir(this.value)" value="6">
+
+<input type="button" onClick="operador('-')" value="-">
+
+<br>
+
+<input type="button" onclick="escribir(this.value)" value="1">
+
+<input type="button" onclick="escribir(this.value)" value="2">
+
+<input type="button" onclick="escribir(this.value)" value="3">
+
+<input type="button" onClick="operador('+')" value="+">
+
+<br>
+
+
+<input type="button" onclick="escribir(this.value)" value="0">
+
+
+<input type="button" onClick="calcular()" value="=">
+
+<br>
+
+</form>
+
+</center>
+
+<script type="text/javascript">
+
+	var borrar = false;
+	function deletecarac(){
+		var texto3 = document.f1.cajaDeTexto2.value;
+            if (texto3 == "" || texto3 == "0" || texto3.length == 1 && borrarBloque!=true){
+            	document.f1.cajaDeTexto2.value = "0";
+            }
+            else if(borrarBloque!=true){
+             	var res = texto3.substring(0,texto3.length-1);
+             	document.f1.cajaDeTexto2.value = res;
+            }
+	}
+   
+   function escribir(n){
+
+		var texto3 = document.f1.cajaDeTexto2.value;
+
+		if (borrar) {
+			document.f1.cajaDeTexto2.value="";
+			borrar = false;
+			document.f1.cajaDeTexto2.value = n;
+		}
+		else if (texto3 == "0" && n != "."){
+			texto1 = texto3.replace("0", "")
+			document.f1.cajaDeTexto2.value = texto1 + n;
+		}
+		else{
+			document.f1.cajaDeTexto2.value = texto3 + n;
+		}
+
+	}
+
+	function operador(o){
+		var texto2 = document.f1.cajaDeTexto1.value;
+		var texto3 = document.f1.cajaDeTexto2.value;
+		var unum = texto2.substring(texto2.length-1);
+		calcular()
+		if (unum == "+" || unum == "-" || unum=="*" || unum=="/") {
+			unum = unum.replace(unum,o);
+			var res = texto2.substring(0,texto2.length-1);
+			document.f1.cajaDeTexto1.value = res+unum;
+		}
+		if (texto2 == "" && texto3 != ""){
+			document.f1.cajaDeTexto1.value = texto3 + o;
+		}
+		else{
+			document.f1.cajaDeTexto1.value = texto2 + texto3 + o;
+		}
+ 		borrar = true;
+		}
+
+		function calcular(){
+		var texto2 = document.f1.cajaDeTexto1.value;
+		var texto3 = document.f1.cajaDeTexto2.value;
+		document.f1.cajaDeTexto2.value = eval(texto2 + texto3);
+		document.f1.cajaDeTexto1.value = "";
+		borrar = true;
+		borrarBloque = true;
+	}
+
+</script>
+
+</body>
+
+</html>
